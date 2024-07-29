@@ -6,23 +6,21 @@ const TeacherSchema = new mongoose.Schema({
   groups: [String]
 });
 
-const SubjectSchema   
- = new mongoose.Schema({
+const SubjectSchema = new mongoose.Schema({
   title: String,
-  teachers:   
- [{ firstName: String, lastName: String }]
+  teachers: [TeacherSchema] 
 });
 
 const MarkSchema = new mongoose.Schema({
   date: Date,
   mark: Number,
-  subject: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' }
+  subject: SubjectSchema 
 });
 
 const StudentSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  marks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Mark' }]
+  marks: [MarkSchema]
 });
 
 module.exports = {

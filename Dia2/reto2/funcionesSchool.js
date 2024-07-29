@@ -42,14 +42,19 @@ const createData = async () => {
     
   };
 
-const getMarksOfStudent = async (studentName) => {
+  const getMarksOfStudent = async (studentName) => {
     const student = await Student.findOne({ firstName: studentName }).populate({
-        path: 'marks',
-        populate: { path: 'subject' }
+      path: 'marks',
+      populate: { path: 'subject' }
     });
-    const marks = student ? student.marks.map(mark => `${mark.subject.title} ${mark.mark}`) : [];
-    console.log(`Notas de ${studentName}:`, marks);
-};
+  
+    if (student) {
+      const marks = student.marks.map(mark => `${mark.subject.title} ${mark.mark}`);
+      console.log(`Notas de ${studentName}:`, marks);
+    } else {
+      console.log(`Estudiante ${studentName} no encontrado.`);
+    }
+  };
 
 const getSubjectsOfStudent = async (studentName) => {
     const student = await Student.findOne({ firstName: studentName }).populate({
